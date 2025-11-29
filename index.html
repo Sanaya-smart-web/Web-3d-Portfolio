@@ -295,6 +295,188 @@
         transform: rotate(90deg);
         transform-origin: 50% 50%;
       }
+
+      /* Lightbox Styles */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .lightbox.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        animation: zoomIn 0.3s ease;
+      }
+
+      .lightbox-content img,
+      .lightbox-content video {
+        max-width: 100%;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        background: #ef4444;
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10001;
+      }
+
+      .lightbox-close:hover {
+        background: #dc2626;
+        transform: scale(1.1);
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        transform: translateY(-50%);
+        z-index: 10001;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .lightbox-prev:hover,
+      .lightbox-next:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      .lightbox-counter {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        font-size: 16px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 16px;
+        border-radius: 20px;
+        z-index: 10001;
+      }
+
+      @keyframes zoomIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .project-media {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .project-media:hover {
+        transform: scale(1.02);
+      }
+
+      .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .project-media:hover .play-icon {
+        opacity: 1;
+      }
+
+      @keyframes spin-slow {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .animate-spin-slow {
+        animation: spin-slow 8s linear infinite;
+      }
+
+      .hover-3d:hover {
+        transform: translateY(-5px) rotateX(5deg) rotateY(5deg) scale(1.02);
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .floating-element {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
     </style>
   </head>
   <body class="font-sans antialiased">
@@ -457,143 +639,103 @@
             <div class="relative max-w-md">
               <!-- Main Image Container -->
               <div class="relative">
-                <!-- Main Image Container -->
-                <div class="relative">
-                  <!-- Outer Glow Effect -->
+                <!-- Outer Glow Effect -->
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-accent to-accent-light rounded-full blur-3xl opacity-10 animate-pulse"
+                ></div>
+
+                <!-- Main Image with Gradient Border -->
+                <div class="gradient-border hover-3d rounded-full p-2 relative">
+                  <!-- Animated Border -->
                   <div
-                    class="absolute -inset-4 bg-gradient-to-r from-accent to-accent-light rounded-full blur-3xl opacity-10 animate-pulse"
+                    class="absolute -inset-1 rounded-full blur-lg opacity-65 animate-spin-slow"
                   ></div>
 
-                  <!-- Main Image with Gradient Border -->
                   <div
-                    class="gradient-border hover-3d rounded-full p-2 relative"
+                    class="relative overflow-hidden rounded-full bg-gradient-to-br from-accent/20 to-accent-light/60 backdrop-blur-sm"
                   >
-                    <!-- Animated Border -->
+                    <!-- Profile Image -->
+                    <img
+                      src="./images/profile-image.png"
+                      alt="ZAABI Sana - Full Stack Developer"
+                      class="md:w-[300px] h-auto object-cover rounded-full transform transition-all duration-700 hover:scale-110 hover:rotate-2"
+                    />
+
+                    <!-- Gradient Overlay -->
                     <div
-                      class="absolute -inset-1 rounded-full blur-lg opacity-65 animate-spin-slow"
+                      class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent-light/10 rounded-full"
                     ></div>
 
+                    <!-- Shine Effect -->
                     <div
-                      class="relative overflow-hidden rounded-full bg-gradient-to-br from-accent/20 to-accent-light/60 backdrop-blur-sm"
-                    >
-                      <!-- Profile Image -->
-                      <img
-                        src="./images/profile-image.png"
-                        alt="ZAABI Sana - Full Stack Developer"
-                        class="md:w-[300px] h-auto object-cover rounded-full transform transition-all duration-700 hover:scale-110 hover:rotate-2"
-                      />
-
-                      <!-- Gradient Overlay -->
-                      <div
-                        class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent-light/10 rounded-full"
-                      ></div>
-
-                      <!-- Shine Effect -->
-                      <div
-                        class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-1000"
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Floating Tech Icons -->
-                <div
-                  class="absolute -top-4 -left-4 w-20 h-20 glass-effect border border-accent/30 rounded-2xl p-3 neon-glow floating-element"
-                >
-                  <div class="flex items-center justify-center w-full h-full">
-                    <i class="fab fa-react text-accent-light text-3xl"></i>
-                  </div>
-                </div>
-
-                <div
-                  class="absolute -bottom-4 -right-4 w-20 h-20 glass-effect border border-accent/30 rounded-2xl p-3 neon-glow floating-element"
-                  style="animation-delay: 2s"
-                >
-                  <div class="flex items-center justify-center w-full h-full">
-                    <i class="fab fa-node-js text-accent-light text-3xl"></i>
-                  </div>
-                </div>
-
-                <div
-                  class="absolute -top-6 -right-8 w-16 h-16 glass-effect border border-accent/30 rounded-xl p-2 neon-glow floating-element"
-                  style="animation-delay: 1s"
-                >
-                  <div class="flex items-center justify-center w-full h-full">
-                    <i class="fab fa-python text-accent-light text-2xl"></i>
-                  </div>
-                </div>
-
-                <div
-                  class="absolute -bottom-6 -left-8 w-16 h-16 glass-effect border border-accent/30 rounded-xl p-2 neon-glow floating-element"
-                  style="animation-delay: 3s"
-                >
-                  <div class="flex items-center justify-center w-full h-full">
-                    <i class="fas fa-database text-accent-light text-2xl"></i>
-                  </div>
-                </div>
-
-                <!-- Animated Particles -->
-                <div class="absolute inset-0 overflow-hidden rounded-full">
-                  <div
-                    class="absolute top-1/4 left-1/4 w-3 h-3 bg-accent-light rounded-full animate-ping"
-                  ></div>
-                  <div
-                    class="absolute top-3/4 right-1/4 w-2 h-2 bg-accent rounded-full animate-pulse"
-                    style="animation-delay: 1s"
-                  ></div>
-                  <div
-                    class="absolute bottom-1/3 left-1/3 w-1 h-1 bg-accent-light rounded-full animate-bounce"
-                    style="animation-delay: 0.5s"
-                  ></div>
-                </div>
-
-                <!-- Status Indicator -->
-                <div class="absolute -bottom-2 -right-2">
-                  <div class="relative">
-                    <div
-                      class="w-6 h-6 bg-green-500 rounded-full border-2 border-card-dark"
-                    ></div>
-                    <div
-                      class="absolute inset-0 w-6 h-6 bg-green-500 rounded-full animate-ping"
+                      class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-1000"
                     ></div>
                   </div>
                 </div>
               </div>
 
-              <style>
-                @keyframes spin-slow {
-                  from {
-                    transform: rotate(0deg);
-                  }
-                  to {
-                    transform: rotate(360deg);
-                  }
-                }
+              <!-- Floating Tech Icons -->
+              <div
+                class="absolute -top-4 -left-4 w-20 h-20 glass-effect border border-accent/30 rounded-2xl p-3 neon-glow floating-element"
+              >
+                <div class="flex items-center justify-center w-full h-full">
+                  <i class="fab fa-react text-accent-light text-3xl"></i>
+                </div>
+              </div>
 
-                .animate-spin-slow {
-                  animation: spin-slow 8s linear infinite;
-                }
+              <div
+                class="absolute -bottom-4 -right-4 w-20 h-20 glass-effect border border-accent/30 rounded-2xl p-3 neon-glow floating-element"
+                style="animation-delay: 2s"
+              >
+                <div class="flex items-center justify-center w-full h-full">
+                  <i class="fab fa-node-js text-accent-light text-3xl"></i>
+                </div>
+              </div>
 
-                .hover-3d:hover {
-                  transform: translateY(-5px) rotateX(5deg) rotateY(5deg)
-                    scale(1.02);
-                  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                }
+              <div
+                class="absolute -top-6 -right-8 w-16 h-16 glass-effect border border-accent/30 rounded-xl p-2 neon-glow floating-element"
+                style="animation-delay: 1s"
+              >
+                <div class="flex items-center justify-center w-full h-full">
+                  <i class="fab fa-python text-accent-light text-2xl"></i>
+                </div>
+              </div>
 
-                .floating-element {
-                  animation: float 6s ease-in-out infinite;
-                }
+              <div
+                class="absolute -bottom-6 -left-8 w-16 h-16 glass-effect border border-accent/30 rounded-xl p-2 neon-glow floating-element"
+                style="animation-delay: 3s"
+              >
+                <div class="flex items-center justify-center w-full h-full">
+                  <i class="fas fa-database text-accent-light text-2xl"></i>
+                </div>
+              </div>
 
-                @keyframes float {
-                  0%,
-                  100% {
-                    transform: translateY(0px) rotate(0deg);
-                  }
-                  50% {
-                    transform: translateY(-20px) rotate(5deg);
-                  }
-                }
-              </style>
+              <!-- Animated Particles -->
+              <div class="absolute inset-0 overflow-hidden rounded-full">
+                <div
+                  class="absolute top-1/4 left-1/4 w-3 h-3 bg-accent-light rounded-full animate-ping"
+                ></div>
+                <div
+                  class="absolute top-3/4 right-1/4 w-2 h-2 bg-accent rounded-full animate-pulse"
+                  style="animation-delay: 1s"
+                ></div>
+                <div
+                  class="absolute bottom-1/3 left-1/3 w-1 h-1 bg-accent-light rounded-full animate-bounce"
+                  style="animation-delay: 0.5s"
+                ></div>
+              </div>
+
+              <!-- Status Indicator -->
+              <div class="absolute -bottom-2 -right-2">
+                <div class="relative">
+                  <div
+                    class="w-6 h-6 bg-green-500 rounded-full border-2 border-card-dark"
+                  ></div>
+                  <div
+                    class="absolute inset-0 w-6 h-6 bg-green-500 rounded-full animate-ping"
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -903,19 +1045,6 @@
                   ></div>
                 </div>
               </div>
-
-              <div>
-                <div class="flex justify-between mb-3">
-                  <span class="font-semibold text-text-primary">AWS</span>
-                  <span class="text-accent-light font-bold">78%</span>
-                </div>
-                <div class="w-full bg-secondary rounded-full h-3">
-                  <div
-                    class="skill-bar bg-gradient-to-r from-accent to-accent-light h-3 rounded-full"
-                    data-width="78"
-                  ></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -937,7 +1066,7 @@
         </p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- TP 1 - Image-based -->
+          <!-- TP 6 - Cube Animation -->
           <div class="gradient-border hover-3d group">
             <div class="relative overflow-hidden rounded-xl">
               <div
@@ -946,7 +1075,67 @@
               <div class="relative bg-card-dark p-8">
                 <div class="flex justify-between items-start mb-6">
                   <h3 class="text-2xl font-bold text-text-primary">
-                    TP 1: Introduction to Blender
+                    TP 6: 3D Cube Animation
+                  </h3>
+                  <div class="flex space-x-2">
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >Three.js</span
+                    >
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >WebGL</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Cube Video Preview -->
+                <div class="mb-6">
+                  <div class="project-media relative" onclick="openLightbox(0)">
+                    <video
+                      class="w-full h-48 object-cover rounded-lg"
+                      muted
+                      loop
+                      playsinline
+                    >
+                      <source src="./images/TP6/cube.mp4" type="video/mp4" />
+                    </video>
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="text-text-secondary mb-6 leading-relaxed">
+                  An animated 3D cube animation built with Three.js and WebGL.
+                  Features smooth rotation, dynamic lighting, and real-time
+                  rendering.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex space-x-4">
+                  <button
+                    onclick="openCubePage()"
+                    class="flex-1 bg-accent text-white px-6 py-3 rounded-lg font-medium hover:bg-accent-light transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Open Cube Page</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TP 5 - New Project -->
+          <div class="gradient-border hover-3d group">
+            <div class="relative overflow-hidden rounded-xl">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
+              ></div>
+              <div class="relative bg-card-dark p-8">
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="text-2xl font-bold text-text-primary">
+                    TP 5: Advanced 3D Scene
                   </h3>
                   <div class="flex space-x-2">
                     <span
@@ -955,167 +1144,27 @@
                     >
                     <span
                       class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
-                      >Basics</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Image Preview -->
-                <div class="mb-6">
-                  <div
-                    class="relative overflow-hidden rounded-lg cursor-pointer"
-                    onclick="openMediaModal('image-modal-1')"
-                  >
-                    <img
-                      src="./images/TP1/Table.png"
-                      alt="TP 1 Preview"
-                      class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                    />
-                    <div
-                      class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center"
-                    >
-                      <i
-                        class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- File Downloads Section -->
-                <div>
-                  <h4 class="text-lg font-semibold text-accent-light mb-4">
-                    Project Files:
-                  </h4>
-                  <div class="grid grid-cols-1 gap-3">
-                    <!-- Blender File -->
-                    <a
-                      href="./images/TP1/Table.blend"
-                      class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
-                      download
-                    >
-                      <i class="fas fa-cube text-lg"></i>
-                      <span>Blender File</span>
-                      <i
-                        class="fas fa-download text-sm opacity-0 group-hover/file:opacity-100 transition-opacity"
-                      ></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TP 2 - Image-based -->
-          <div class="gradient-border hover-3d group">
-            <div class="relative overflow-hidden rounded-xl">
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
-              ></div>
-              <div class="relative bg-card-dark p-8">
-                <div class="flex justify-between items-start mb-6">
-                  <h3 class="text-2xl font-bold text-text-primary">
-                    TP 2: Advanced Modeling
-                  </h3>
-                  <div class="flex space-x-2">
-                    <span
-                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
-                      >Animation</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Image Preview -->
-                <div class="mb-6">
-                  <div
-                    class="relative overflow-hidden rounded-lg cursor-pointer"
-                    onclick="openMediaModal('image-modal-2')"
-                  >
-                    <img
-                      src="./images/TP2/Parfume.png"
-                      alt="TP 2 Preview"
-                      class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                    />
-                    <div
-                      class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center"
-                    >
-                      <i
-                        class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- File Downloads Section -->
-                <div>
-                  <h4 class="text-lg font-semibold text-accent-light mb-4">
-                    Project Files:
-                  </h4>
-                  <div class="grid grid-cols-1 gap-3">
-                    <!-- Blender File -->
-                    <a
-                      href="./images/TP2/Parfume_Fluide.blend"
-                      class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
-                      download
-                    >
-                      <i class="fas fa-cube text-lg"></i>
-                      <span>Blender File</span>
-                      <i
-                        class="fas fa-download text-sm opacity-0 group-hover/file:opacity-100 transition-opacity"
-                      ></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TP 3 - Video-based -->
-          <div class="gradient-border hover-3d group">
-            <div class="relative overflow-hidden rounded-xl">
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
-              ></div>
-              <div class="relative bg-card-dark p-8">
-                <div class="flex justify-between items-start mb-6">
-                  <h3 class="text-2xl font-bold text-text-primary">
-                    TP 3: Parfume Animation
-                  </h3>
-                  <div class="flex space-x-2">
-                    <span
-                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
-                      >Animation</span
-                    >
-                    <span
-                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
-                      >Simulation</span
+                      >Lighting</span
                     >
                   </div>
                 </div>
 
                 <!-- Video Preview -->
                 <div class="mb-6">
-                  <div
-                    class="relative overflow-hidden rounded-lg cursor-pointer video-preview"
-                    data-modal="video-modal-3"
-                  >
+                  <div class="project-media relative" onclick="openLightbox(1)">
                     <video
-                      class="w-full h-48 object-cover"
+                      class="w-full h-48 object-cover rounded-lg"
                       muted
                       loop
                       playsinline
                     >
                       <source
-                        src="./images/TP3/Parfume_Pub.mp4"
+                        src="./images/TP5/parfume-animation.mp4"
                         type="video/mp4"
                       />
-                      Your browser does not support the video tag.
                     </video>
-                    <div
-                      class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center"
-                    >
-                      <i
-                        class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      ></i>
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
                     </div>
                   </div>
                 </div>
@@ -1128,7 +1177,7 @@
                   <div class="grid grid-cols-1 gap-3">
                     <!-- Blender File -->
                     <a
-                      href="./images/TP3/Parfume_Pub.blend"
+                      href="./images/TP5/Parfume_Animation.blend"
                       class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
                       download
                     >
@@ -1169,12 +1218,9 @@
 
                 <!-- Video Preview -->
                 <div class="mb-6">
-                  <div
-                    class="relative overflow-hidden rounded-lg cursor-pointer video-preview"
-                    data-modal="video-modal-4"
-                  >
+                  <div class="project-media relative" onclick="openLightbox(2)">
                     <video
-                      class="w-full h-48 object-cover"
+                      class="w-full h-48 object-cover rounded-lg"
                       muted
                       loop
                       playsinline
@@ -1183,14 +1229,9 @@
                         src="./images/TP4/Parfume_fluide.mp4"
                         type="video/mp4"
                       />
-                      Your browser does not support the video tag.
                     </video>
-                    <div
-                      class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center"
-                    >
-                      <i
-                        class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      ></i>
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
                     </div>
                   </div>
                 </div>
@@ -1232,442 +1273,191 @@
             </div>
           </div>
 
-          <!-- Video Modals -->
-          <div
-            id="video-modal-3"
-            class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-          >
-            <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-              <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold text-text-primary">
-                  TP 3: Parfume Animation
-                </h3>
-                <button
-                  onclick="closeMediaModal('video-modal-3')"
-                  class="text-text-secondary hover:text-accent-light text-2xl"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
+          <!-- TP 3 - Video-based -->
+          <div class="gradient-border hover-3d group">
+            <div class="relative overflow-hidden rounded-xl">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
+              ></div>
+              <div class="relative bg-card-dark p-8">
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="text-2xl font-bold text-text-primary">
+                    TP 3: Parfume Animation
+                  </h3>
+                  <div class="flex space-x-2">
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >Animation</span
+                    >
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >Simulation</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Video Preview -->
+                <div class="mb-6">
+                  <div class="project-media relative" onclick="openLightbox(3)">
+                    <video
+                      class="w-full h-48 object-cover rounded-lg"
+                      muted
+                      loop
+                      playsinline
+                    >
+                      <source
+                        src="./images/TP3/Parfume_Pub.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- File Downloads Section -->
+                <div>
+                  <h4 class="text-lg font-semibold text-accent-light mb-4">
+                    Project Files:
+                  </h4>
+                  <div class="grid grid-cols-1 gap-3">
+                    <!-- Blender File -->
+                    <a
+                      href="./images/TP3/Parfume_Pub.blend"
+                      class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
+                      download
+                    >
+                      <i class="fas fa-cube text-lg"></i>
+                      <span>Blender File</span>
+                      <i
+                        class="fas fa-download text-sm opacity-0 group-hover/file:opacity-100 transition-opacity"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div class="relative">
-                <video controls autoplay class="w-full rounded-lg">
-                  <source src="./images/TP3/Parfume_Pub.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <button
-                  onclick="toggleFullscreen('video-modal-3 video')"
-                  class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                >
-                  <i class="fas fa-expand"></i>
-                </button>
+            </div>
+          </div>
+
+          <!-- TP 2 - Image-based -->
+          <div class="gradient-border hover-3d group">
+            <div class="relative overflow-hidden rounded-xl">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
+              ></div>
+              <div class="relative bg-card-dark p-8">
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="text-2xl font-bold text-text-primary">
+                    TP 2: Advanced Modeling
+                  </h3>
+                  <div class="flex space-x-2">
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >Animation</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="mb-6">
+                  <div class="project-media relative" onclick="openLightbox(4)">
+                    <img
+                      src="./images/TP2/Parfume.png"
+                      alt="TP 2"
+                      class="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div class="play-icon">
+                      <i class="fas fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- File Downloads Section -->
+                <div>
+                  <h4 class="text-lg font-semibold text-accent-light mb-4">
+                    Project Files:
+                  </h4>
+                  <div class="grid grid-cols-1 gap-3">
+                    <!-- Blender File -->
+                    <a
+                      href="./images/TP2/Parfume_Pro.blend"
+                      class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
+                      download
+                    >
+                      <i class="fas fa-cube text-lg"></i>
+                      <span>Blender File</span>
+                      <i
+                        class="fas fa-download text-sm opacity-0 group-hover/file:opacity-100 transition-opacity"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div
-            id="video-modal-4"
-            class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-          >
-            <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-              <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold text-text-primary">
-                  TP 4: Advanced Animation (Parfume Fluide)
-                </h3>
-                <button
-                  onclick="closeMediaModal('video-modal-4')"
-                  class="text-text-secondary hover:text-accent-light text-2xl"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
+          <!-- TP 1 - Image-based -->
+          <div class="gradient-border hover-3d group">
+            <div class="relative overflow-hidden rounded-xl">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent-light/20 transform scale-110 group-hover:scale-100 transition-transform duration-500"
+              ></div>
+              <div class="relative bg-card-dark p-8">
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="text-2xl font-bold text-text-primary">
+                    TP 1: Introduction to Blender
+                  </h3>
+                  <div class="flex space-x-2">
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >3D Modeling</span
+                    >
+                    <span
+                      class="bg-accent/20 text-accent-light px-3 py-1 rounded-full text-sm font-medium"
+                      >Basics</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="mb-6">
+                  <div class="project-media relative" onclick="openLightbox(5)">
+                    <img
+                      src="./images/TP1/Table.png"
+                      alt="TP 1"
+                      class="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div class="play-icon">
+                      <i class="fas fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- File Downloads Section -->
+                <div>
+                  <h4 class="text-lg font-semibold text-accent-light mb-4">
+                    Project Files:
+                  </h4>
+                  <div class="grid grid-cols-1 gap-3">
+                    <!-- Blender File -->
+                    <a
+                      href="./images/TP1/Table.blend"
+                      class="flex items-center justify-center space-x-2 glass-effect border border-accent/30 text-accent-light px-4 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors group/file"
+                      download
+                    >
+                      <i class="fas fa-cube text-lg"></i>
+                      <span>Blender File</span>
+                      <i
+                        class="fas fa-download text-sm opacity-0 group-hover/file:opacity-100 transition-opacity"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div class="relative">
-                <video controls autoplay class="w-full rounded-lg autoplay">
-                  <source
-                    src="./images/TP4/Parfume_fluide.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-                <button
-                  onclick="toggleFullscreen('video-modal-4 video')"
-                  class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                >
-                  <i class="fas fa-expand"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <script>
-            // Fix for video functionality
-            document.addEventListener("DOMContentLoaded", function () {
-              // Initialize video previews
-              const videoPreviews = document.querySelectorAll(".video-preview");
-
-              videoPreviews.forEach((preview) => {
-                const video = preview.querySelector("video");
-                const modalId = preview.getAttribute("data-modal");
-
-                // Auto-play on hover
-                preview.addEventListener("mouseenter", function () {
-                  if (video) {
-                    video.play().catch((e) => {
-                      console.log("Autoplay prevented:", e);
-                    });
-                  }
-                });
-
-                // Pause on mouse leave
-                preview.addEventListener("mouseleave", function () {
-                  if (video) {
-                    video.pause();
-                    video.currentTime = 0;
-                  }
-                });
-
-                // Click to open modal
-                preview.addEventListener("click", function (e) {
-                  e.preventDefault();
-                  openMediaModal(modalId);
-                });
-              });
-
-              // Auto-play videos in modals when they open
-              const observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                  if (
-                    mutation.type === "attributes" &&
-                    mutation.attributeName === "class"
-                  ) {
-                    const target = mutation.target;
-                    if (
-                      target.classList.contains("media-modal") &&
-                      !target.classList.contains("hidden")
-                    ) {
-                      const video = target.querySelector("video");
-                      if (video) {
-                        video.play().catch((e) => {
-                          console.log("Modal video autoplay prevented:", e);
-                        });
-                      }
-                    }
-                  }
-                });
-              });
-
-              // Observe all modal elements
-              document.querySelectorAll(".media-modal").forEach((modal) => {
-                observer.observe(modal, { attributes: true });
-              });
-            });
-
-            // Media modal functions
-            function openMediaModal(modalId) {
-              const modal = document.getElementById(modalId);
-              if (modal) {
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
-                document.body.style.overflow = "hidden";
-
-                // Auto-play video when modal opens
-                const video = modal.querySelector("video");
-                if (video) {
-                  video.play().catch((e) => {
-                    console.log("Modal video autoplay prevented:", e);
-                  });
-                }
-              }
-            }
-
-            function closeMediaModal(modalId) {
-              const modal = document.getElementById(modalId);
-              if (modal) {
-                modal.classList.add("hidden");
-                modal.classList.remove("flex");
-                document.body.style.overflow = "auto";
-
-                // Pause video when closing modal
-                const video = modal.querySelector("video");
-                if (video) {
-                  video.pause();
-                }
-              }
-            }
-
-            // Fullscreen toggle function
-            function toggleFullscreen(elementSelector) {
-              const element = document.querySelector(elementSelector);
-
-              if (!document.fullscreenElement) {
-                if (element.requestFullscreen) {
-                  element.requestFullscreen();
-                } else if (element.webkitRequestFullscreen) {
-                  element.webkitRequestFullscreen();
-                } else if (element.msRequestFullscreen) {
-                  element.msRequestFullscreen();
-                }
-              } else {
-                if (document.exitFullscreen) {
-                  document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                  document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                  document.msExitFullscreen();
-                }
-              }
-            }
-
-            // Close modal when clicking outside
-            document.addEventListener("click", function (e) {
-              if (e.target.classList.contains("media-modal")) {
-                const modalId = e.target.id;
-                closeMediaModal(modalId);
-              }
-            });
-
-            // Handle escape key to close modals
-            document.addEventListener("keydown", function (e) {
-              if (e.key === "Escape") {
-                const openModal = document.querySelector(
-                  ".media-modal:not(.hidden)"
-                );
-                if (openModal) {
-                  closeMediaModal(openModal.id);
-                }
-              }
-            });
-          </script>
-        </div>
-
-        <!-- Media Modals -->
-        <!-- Image Modals -->
-        <div
-          id="image-modal-1"
-          class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-        >
-          <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-2xl font-bold text-text-primary">TP 1 Preview</h3>
-              <button
-                onclick="closeMediaModal('image-modal-1')"
-                class="text-text-secondary hover:text-accent-light text-2xl"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="relative">
-              <img
-                src="./images/TP1/Table.png"
-                alt="TP 1 Full Preview"
-                class="w-full rounded-lg"
-              />
-              <button
-                onclick="toggleFullscreen('image-modal-1 img')"
-                class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <i class="fas fa-expand"></i>
-              </button>
             </div>
           </div>
         </div>
-
-        <div
-          id="image-modal-2"
-          class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-        >
-          <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-2xl font-bold text-text-primary">TP 2 Preview</h3>
-              <button
-                onclick="closeMediaModal('image-modal-2')"
-                class="text-text-secondary hover:text-accent-light text-2xl"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="relative">
-              <img
-                src="./images/TP2/Parfume.png"
-                alt="TP 2 Full Preview"
-                class="w-full rounded-lg"
-              />
-              <button
-                onclick="toggleFullscreen('image-modal-2 img')"
-                class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <i class="fas fa-expand"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Video Modals -->
-        <div
-          id="video-modal-3"
-          class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-        >
-          <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-2xl font-bold text-text-primary">
-                TP 3 Video Demo
-              </h3>
-              <button
-                onclick="closeMediaModal('video-modal-3')"
-                class="text-text-secondary hover:text-accent-light text-2xl"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="relative">
-              <video controls autoplay class="w-full rounded-lg">
-                <source src="./images/TP3/video-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <button
-                onclick="toggleFullscreen('video-modal-3 video')"
-                class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <i class="fas fa-expand"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="video-modal-4"
-          class="media-modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"
-        >
-          <div class="bg-card-dark rounded-2xl p-6 max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-2xl font-bold text-text-primary">
-                TP 4 Video Demo
-              </h3>
-              <button
-                onclick="closeMediaModal('video-modal-4')"
-                class="text-text-secondary hover:text-accent-light text-2xl"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="relative">
-              <video controls autoplay class="w-full rounded-lg">
-                <source src="./images/TP4/video-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <button
-                onclick="toggleFullscreen('video-modal-4 video')"
-                class="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <i class="fas fa-expand"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <script>
-          // Media modal functions
-          function openMediaModal(modalId) {
-            document.getElementById(modalId).classList.remove("hidden");
-            document.getElementById(modalId).classList.add("flex");
-            document.body.style.overflow = "hidden";
-
-            // Auto-play videos when modal opens
-            const video = document.querySelector(`#${modalId} video`);
-            if (video) {
-              video.play();
-            }
-          }
-
-          function closeMediaModal(modalId) {
-            document.getElementById(modalId).classList.add("hidden");
-            document.getElementById(modalId).classList.remove("flex");
-            document.body.style.overflow = "auto";
-
-            // Pause videos when closing modal
-            const video = document.querySelector(`#${modalId} video`);
-            if (video) {
-              video.pause();
-            }
-          }
-
-          // Fullscreen toggle function
-          function toggleFullscreen(elementSelector) {
-            const element = document.querySelector(elementSelector);
-
-            if (!document.fullscreenElement) {
-              if (element.requestFullscreen) {
-                element.requestFullscreen();
-              } else if (element.webkitRequestFullscreen) {
-                element.webkitRequestFullscreen();
-              } else if (element.msRequestFullscreen) {
-                element.msRequestFullscreen();
-              }
-            } else {
-              if (document.exitFullscreen) {
-                document.exitFullscreen();
-              } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-              } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-              }
-            }
-          }
-
-          // Close modal when clicking outside
-          document.addEventListener("click", function (e) {
-            if (e.target.classList.contains("media-modal")) {
-              e.target.classList.add("hidden");
-              e.target.classList.remove("flex");
-              document.body.style.overflow = "auto";
-
-              // Pause videos
-              const video = e.target.querySelector("video");
-              if (video) {
-                video.pause();
-              }
-            }
-          });
-
-          // Auto-play videos in preview on hover
-          document.addEventListener("DOMContentLoaded", function () {
-            const videos = document.querySelectorAll("video");
-            videos.forEach((video) => {
-              video.addEventListener("mouseenter", function () {
-                this.play();
-              });
-              video.addEventListener("mouseleave", function () {
-                this.pause();
-                this.currentTime = 0;
-              });
-            });
-          });
-        </script>
-
-        <style>
-          .media-modal {
-            backdrop-filter: blur(10px);
-          }
-
-          .group:hover .group-hover\/file\:opacity-100 {
-            opacity: 1;
-          }
-
-          /* Fullscreen styling */
-          .media-modal:fullscreen {
-            padding: 0;
-            background: black;
-          }
-
-          .media-modal:fullscreen > div {
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            border-radius: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-          }
-        </style>
       </div>
     </section>
 
@@ -1844,8 +1634,151 @@
       </div>
     </footer>
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+      <div class="lightbox-counter">
+        <span id="current-index">1</span> / <span id="total-items">6</span>
+      </div>
+      <button class="lightbox-close" onclick="closeLightbox()">×</button>
+
+      <div class="lightbox-nav">
+        <button class="lightbox-prev" onclick="navigate(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-next" onclick="navigate(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="lightbox-content" id="lightbox-content">
+        <!-- المحتوى سيتم إضافته ديناميكياً -->
+      </div>
+    </div>
+
     <script>
+      // بيانات المشاريع
+      const projects = [
+        {
+          type: "video",
+          src: "./images/TP6/cube.mp4",
+          title: "TP 6: 3D Cube Animation",
+        },
+        {
+          type: "video",
+          src: "./images/TP5/parfume-animation.mp4",
+          title: "TP 5: Advanced 3D Scene",
+        },
+        {
+          type: "video",
+          src: "./images/TP4/Parfume_fluide.mp4",
+          title: "TP 4: Advanced Animation (Parfume Fluide)",
+        },
+        {
+          type: "video",
+          src: "./images/TP3/Parfume_Pub.mp4",
+          title: "TP 3: Parfume Animation",
+        },
+        {
+          type: "image",
+          src: "./images/TP2/Parfume.png",
+          title: "TP 2: Advanced Modeling",
+        },
+        {
+          type: "image",
+          src: "./images/TP1/Table.png",
+          title: "TP 1: Introduction to Blender",
+        },
+      ];
+
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById("lightbox").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("active");
+        document.body.style.overflow = "auto";
+
+        // إيقاف الفيديو عند الإغلاق
+        const video = document.querySelector("#lightbox-content video");
+        if (video) {
+          video.pause();
+        }
+      }
+
+      function navigate(direction) {
+        currentIndex += direction;
+
+        if (currentIndex < 0) {
+          currentIndex = projects.length - 1;
+        } else if (currentIndex >= projects.length) {
+          currentIndex = 0;
+        }
+
+        updateLightbox();
+      }
+
+      function updateLightbox() {
+        const project = projects[currentIndex];
+        const lightboxContent = document.getElementById("lightbox-content");
+        const currentIndexElement = document.getElementById("current-index");
+        const totalItemsElement = document.getElementById("total-items");
+
+        // تحديث العداد
+        currentIndexElement.textContent = currentIndex + 1;
+        totalItemsElement.textContent = projects.length;
+
+        // تحديث المحتوى
+        if (project.type === "video") {
+          lightboxContent.innerHTML = `
+            <video controls autoplay class="max-w-full max-h-[90vh]">
+              <source src="${project.src}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          `;
+        } else {
+          lightboxContent.innerHTML = `
+            <img src="${project.src}" alt="${project.title}" class="max-w-full max-h-[90vh]">
+          `;
+        }
+      }
+
+      // Function to open cube page
+      function openCubePage() {
+        window.open("./images/TP6/cube.html", "_blank");
+      }
+
+      // إضافة event listeners للأزرار
+      document.addEventListener("keydown", function (e) {
+        if (!document.getElementById("lightbox").classList.contains("active"))
+          return;
+
+        switch (e.key) {
+          case "Escape":
+            closeLightbox();
+            break;
+          case "ArrowLeft":
+            navigate(-1);
+            break;
+          case "ArrowRight":
+            navigate(1);
+            break;
+        }
+      });
+
+      // Auto-play videos in preview
       document.addEventListener("DOMContentLoaded", function () {
+        const videos = document.querySelectorAll(".project-media video");
+        videos.forEach((video) => {
+          video.play().catch((e) => {
+            console.log("Autoplay prevented:", e);
+          });
+        });
+
         // Create floating particles
         function createParticles() {
           const container = document.getElementById("particles-container");
